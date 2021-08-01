@@ -1,0 +1,22 @@
+
+-- install node js in ubuntu
+
+-- URL
+https://github.com/nodesource/distributions/blob/master/README.md
+
+-- Node.js v14.x:
+
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+
+-- if curl cmd not found
+sudo apt install curl
+
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+
+sudo apt-get install -y nodejs
+
+
+-- verify installed or not
+
+node -v
+npm -v

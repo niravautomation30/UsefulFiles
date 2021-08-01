@@ -1,0 +1,40 @@
+How to setup Jenkins
+
+Step 1
+Download jenkins.war file
+https://jenkins.io/download/​
+
+Step 2
+Run Jenkins
+first go to folder where you have put jenkins.war file and there open terminal
+java -jar jenkins.war
+java -jar jenkins.war --httpPort=9090
+
+Login
+username : niravkumar
+pass : 
+
+
+Create job and run Selenium tests
+
+Step 1
+Create a new freestyle job
+
+Step 2
+Add details
+Add commands to run Selenium tests 
+For example: cd /home/nirav/eclipse-workspace/PageObjectModelDemo
+	     mvn clean test
+
+Step 3
+Apply and Save
+
+Step 4
+Run and validate
+
+
+
+generate public and private key
+run below command in terminal
+
+>>ssh-keygen

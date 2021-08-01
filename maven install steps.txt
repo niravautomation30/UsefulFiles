@@ -1,0 +1,32 @@
+Install Java Commands  
+------------------
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt install oracle-java8-installer
+sudo apt install oracle-java8-set-default
+
+Install Maven Commands  
+------------------
+cd /opt/
+sudo wget http://www-eu.apache.org/dist/maven/m...​
+
+sudo tar -xf apache-maven-3.5.3-bin.tar.gz
+sudo mv apache-maven-3.5.3/ apache-maven/
+
+sudo update-alternatives --install /usr/bin/mvn maven /opt/apache-maven/bin/mvn 1001
+
+Configuring Apache Maven Environment
+------------------
+
+$ cd /etc/profile.d/
+$ sudo gedit maven.sh
+###################################################
+# Apache Maven Environment Variables
+# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+export M2_HOME=/opt/apache-maven
+export MAVEN_HOME=/opt/apache-maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+sudo chmod +x maven.sh
+sudo source maven.sh
