@@ -10,13 +10,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DropDown3 {
 
 	static WebDriver driver;
 
-	public static void main(String[] args) throws InterruptedException {
+	@Test(dataProvider = "getdate")
+	public void test(String d, String m, String y) throws InterruptedException {
 
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
@@ -27,9 +31,9 @@ public class DropDown3 {
 //		
 //		doFromandToSelection("ctl00_mainContent_ddl_destinationStation1_CTXT", "Delhi");		
 
-		String dayToBeSelected = "17";
-		String monthToBeSelected = "April";
-		String yearToBeSelected = "2022";
+		String dayToBeSelected = d;
+		String monthToBeSelected = m;
+		String yearToBeSelected = y;
 		String completeDateToBeSelected = String.join("-", dayToBeSelected, monthToBeSelected, yearToBeSelected);
 		System.out.println("Depature date =" + completeDateToBeSelected);
 
@@ -101,6 +105,15 @@ public class DropDown3 {
 				}
 			} while (!flag);
 		}
+	}
+	
+	@DataProvider
+	public Object[][] getdate(){
+		return new Object[][]{
+			{"11","December","2021"},
+			{"31","December","2022"},
+			{"11","April","2022"}
+		};
 	}
 
 }
