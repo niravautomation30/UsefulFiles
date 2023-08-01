@@ -444,6 +444,55 @@ public class PerformAction {
 		return "-1";
 	}
 
+	public void useRobotToUploadFile(String saveToPath){
+		try{
+			Thread.sleep(2000);
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("window.focus();");
+			Robot r = new Robot();
+			Thread.sleep(2000);
+
+			StringSelection ss = new StringSelection(saveToPath);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+			System.out.println("===========File Path==============="+ saveToPath);
+			Thread.sleep(2000);
+			r.keyPress(KeyEvent.VK_CONTROL);
+			r.keyPress(KeyEvent.VK_V);
+			System.out.println("===========Hit CTRL + V===============");
+
+			Thread.sleep(2000);
+			r.keyRelease(KeyEvent.VK_V);
+			r.keyRelease(KeyEvent.VK_CONTROL);			
+			System.out.println("===========Release CTRL + V===============");
+
+			Thread.sleep(2000);
+			r.keyPress(KeyEvent.VK_ENTER);
+			r.keyRelease(KeyEvent.VK_ENTER);
+			System.out.println("===========Hit ENTER===============");
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getTextUsingSystemClipboard() throws FindFailed, InterruptedException, AWTException, UnsupportedFlavorException, IOException {
+		Thread.sleep(1000);
+		this.robotCopy();
+		Thread.sleep(100);
+		String data="";
+		Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+		Clipboard clipboard = defaultToolkit.getSystemClipboard();
+		DataFlavor dataFlavor = DataFlavor.stringFlavor;
+		if(clipboard.isDataFlavorAvailable(dataFlavor)){
+			Thread.sleep(300);
+			Object text = clipboard.getData(dataFlavor);
+			data = (String)text;
+			clipboard.setContents(new StringSelection(""), null);
+		} else {
+			System.out.println("===========No isDataFlavorAvailable===============");
+		}
+		return data;
+	}
 	// *************Sikuli Functions Start*************************
 
 	public void sikuliWait(Pattern img, double timeInSecond) throws FindFailed {
@@ -633,5 +682,65 @@ public class PerformAction {
 		}
 	}
 
+	public void sikuliExtractTextByPosition(Pattern img, String fetchTextFrom, int width, int height, int numberOfTimes) throws FindFailed {
+		Screen screen= new Screen();
+		Pattern pattern = new Pattern(img).similar(0.5); //similar : 0.5
+		Match match = screen.find(pattern).exists(img);
+		Region region = new Region(match.getRect());
+		Region r = null;
+		String text = "";
+		String multiText = "";
+		if(numberOfTimes > 1){
+			for(int i=0: i < numberOfTimes; i++){
+				switch(fetchTextFrom.toLowerCase()){
+					case "below":
+						r = region.below(height)
+						break;
+					case "below":
+						r = region.above(height)
+						break;
+					case "below":
+						r = region.left(width)
+						break;
+					case "below":
+						r = region.right(width)
+						break;
+					default:
+						break;
+				}
+				r.highlight(1);
+				text = r.text().trim();
+				System.out.println("The Image Details Are ==="+ text);
+				multiText = multiText +  text + (((numberOfTimes-1) > i) ? ":":"");
+				region = Region.create(r);
+			}
+		} else {
+				switch(fetchTextFrom.toLowerCase()){
+					case "below":
+						r = region.below(height)
+						break;
+					case "below":
+						r = region.above(height)
+						break;
+					case "below":
+						r = region.left(width)
+						break;
+					case "below":
+						r = region.right(width)
+						break;
+					default:
+						break;
+				}
+				r.highlight(1);
+				text = r.text().trim();
+				System.out.println("The Image Details Are ==="+ text);
+		}
+		if(numberOfTimes > 1){
+			return multiText;
+		} else {
+			return text;
+		}
+		
+	}
 	// *************Sikuli Functions End*************************
 }
