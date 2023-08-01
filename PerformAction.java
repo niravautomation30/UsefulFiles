@@ -475,6 +475,42 @@ public class PerformAction {
 		}
 	}
 
+	public String robotCopy() throws InterruptedException, AWTException {
+		Robot r = new Robot();
+		Thread.sleep(2000);
+		r.keyPress(KeyEvent.VK_CONTROL);
+		Thread.sleep(100);
+		r.keyPress(KeyEvent.VK_C);
+		Thread.sleep(100);
+		r.keyPress(KeyEvent.VK_C);
+		Thread.sleep(100);
+		r.keyRelease(KeyEvent.VK_C);
+		Thread.sleep(100);
+		r.keyRelease(KeyEvent.VK_CONTROL);
+		Thread.sleep(100);
+	}
+
+	public String robotCtrlShiftEnd() throws InterruptedException, AWTException {
+		Robot r = new Robot();
+		Thread.sleep(100);
+		if(Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_NUM_LOCK)){
+			System.out.println("===========Num Lock Key Is On===============");
+			Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_NUM_LOCK, false);
+		}
+		r.keyPress(KeyEvent.VK_SHIFT);
+		Thread.sleep(100);
+		r.keyPress(KeyEvent.VK_CONTROL);
+		Thread.sleep(100);
+		r.keyPress(KeyEvent.VK_END);
+		Thread.sleep(100);
+		r.keyRelease(KeyEvent.VK_END);
+		Thread.sleep(100);
+		r.keyRelease(KeyEvent.VK_CONTROL);
+		Thread.sleep(100);
+		r.keyRelease(KeyEvent.VK_SHIFT);
+		Thread.sleep(100);
+	}
+	
 	public String getTextUsingSystemClipboard() throws FindFailed, InterruptedException, AWTException, UnsupportedFlavorException, IOException {
 		Thread.sleep(1000);
 		this.robotCopy();
@@ -493,6 +529,31 @@ public class PerformAction {
 		}
 		return data;
 	}
+
+	public int getRandomNumberFromRange(int startRange, int finishRange) {
+		Random	rdm = new Random();
+		return rdm.nextInt((finishRange + 1 - startRange)) + startRange;
+	}
+
+	public void zoomOut_In(Double percentge) {
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("document.body.style.zoom = '"+percentge+"'");
+	}
+
+	public void zoomPageOut() {
+		driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
+	}
+
+	
+	public void zoomPageIn() {
+		driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));
+	}
+
+	
+	public void zoomPageOut() {
+		driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL, "0"));
+	}
+	
 	// *************Sikuli Functions Start*************************
 
 	public void sikuliWait(Pattern img, double timeInSecond) throws FindFailed {
